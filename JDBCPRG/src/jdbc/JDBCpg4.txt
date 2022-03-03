@@ -1,0 +1,45 @@
+package jdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class jdbcdemopg4 {
+
+	public static void main(String[] args) throws ClassNotFoundException {
+		 String QUERY = "select * from employee_details";
+	        //register the oracle driver with DriverManager
+	        Class.forName("com.mysql.jdbc.Driver"); 
+	        //Here we have used Java 8 so opening the connection in try statement
+	        try(Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/sample","root","latha123");
+	        {
+	                Statement statemnt1 = conn.createStatement();
+	                //Created statement and execute it 
+	                ResultSet rs1 = statemnt1.executeQuery(QUERY); 
+	                {   
+	                    //Get the values of the record using while loop
+	                    while(rs1.next())
+	                    {
+	                        int empNum = rs1.getInt("empNum");
+	                        String lastName = rs1.getString("lastName");
+	                        String firstName = rs1.getString("firstName");
+	                        String email = rs1.getString("email");
+	                        String deptNum = rs1.getString("deptNum");
+	                        String salary = rs1.getString("salary");
+	                        //store the values which are retrieved using ResultSet and print it
+	                    System.out.println(empNum + "," +lastName+ "," +firstName+ "," +email +","+deptNum +"," +salary);
+	                    }
+	                } 
+	        }
+	        catch (SQLException e) {
+	            //If exception occurs catch it and exit the program
+	            e.printStackTrace();
+	        }
+	       }
+	    
+	
+	}
+
+
